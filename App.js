@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AsyncStorage, StatusBar } from "react-native";
 import { NavigationNativeContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import HomeScreen from "./containers/HomeScreen";
+import ListScreen from "./containers/ListScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SettingsScreen from "./containers/SettingsScreen";
@@ -13,8 +13,8 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [userToken, setUserToken] = React.useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userToken, setUserToken] = useState(null);
 
   const setToken = async token => {
     if (token) {
@@ -25,7 +25,7 @@ export default function App() {
     setUserToken(token);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const bootstrapAsync = async () => {
       // We should also handle error for production apps
       const Token = await AsyncStorage.getItem("token");
@@ -53,6 +53,7 @@ export default function App() {
           <Stack.Screen name="Tab" options={{ header: () => null }}>
             {() => (
               <Tab.Navigator
+                // navigation tab on the bottom of the screen
                 screenOptions={({ route }) => {
                   return {
                     tabBarIcon: ({ focused, color, size }) => {
@@ -77,8 +78,20 @@ export default function App() {
                 <Tab.Screen>
                   {() => (
                     <Stack.Navigator>
-                      <Stack.Screen name="Home" options={{ title: "My App" }}>
-                        {() => <HomeScreen />}
+                      <Stack.Screen
+                        name="List"
+                        options={{
+                          title: "Mon AirBnB",
+                          headerStyle: {
+                            backgroundColor: "#85C5D3"
+                          },
+                          headerTitleStyle: {
+                            color: "white",
+                            fontSize: 20
+                          }
+                        }}
+                      >
+                        {() => <ListScreen />}
                       </Stack.Screen>
 
                       <Stack.Screen
