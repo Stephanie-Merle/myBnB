@@ -5,7 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import ListScreen from "./containers/ListScreen";
-import ProfileScreen from "./containers/ProfileScreen";
+import RoomScreen from "./containers/RoomScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 
@@ -70,9 +70,13 @@ export default function App() {
                     title: route.name === "undefined" ? "Home" : route.name
                   };
                 }}
+                // Setting up bottom navigation bar colors
                 tabBarOptions={{
-                  activeTintColor: "tomato",
-                  inactiveTintColor: "gray"
+                  activeTintColor: "#85C5D3",
+                  inactiveTintColor: "gray",
+                  style: {
+                    backgroundColor: "white"
+                  }
                 }}
               >
                 <Tab.Screen>
@@ -95,10 +99,12 @@ export default function App() {
                       </Stack.Screen>
 
                       <Stack.Screen
-                        name="Profile"
-                        options={{ title: "User Profile" }}
+                        name="Room"
+                        options={{
+                          title: "Room"
+                        }}
                       >
-                        {() => <ProfileScreen />}
+                        {() => <RoomScreen />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}

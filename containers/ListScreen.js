@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/core";
-import { Button, Text, View, Image, StyleSheet } from "react-native";
+import { TouchableOpacity, Text, View, Image, StyleSheet } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
@@ -22,6 +22,7 @@ export default function ListScreen() {
   useEffect(() => {
     fetchingData();
   }, []);
+
   return (
     <View>
       <FlatList
@@ -29,78 +30,84 @@ export default function ListScreen() {
         keyExtractor={item => String(item._id)}
         renderItem={({ item }) => (
           <View>
-            <View>
-              <Image
-                source={{ uri: item.photos[0] }}
-                style={styles.imageContainer}
-              />
-              <View style={styles.price}>
-                <Text
-                  style={{
-                    color: "white",
-                    fontSize: 20,
-                    paddingLeft: 10,
-                    paddingTop: 15
-                  }}
-                >
-                  {item.price} €
-                </Text>
-              </View>
-            </View>
-
-            <View style={styles.infoRoom}>
+            <TouchableOpacity
+              title="Got to room"
+              onPress={() => {
+                navigation.navigate("Room", { userId: item._id });
+              }}
+            >
               <View>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    fontSize: 26,
-                    width: 320,
-                    height: 40
-                  }}
-                >
-                  {item.title}
-                </Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Ionicons
-                    name="ios-star"
-                    size={20}
-                    color={item.ratingValue > 0 ? "#f7d513" : "gray"}
-                  />
-                  <Ionicons
-                    name="ios-star"
-                    size={20}
-                    color={item.ratingValue > 1 ? "#f7d513" : "gray"}
-                  />
-                  <Ionicons
-                    name="ios-star"
-                    size={20}
-                    color={item.ratingValue > 2 ? "#f7d513" : "gray"}
-                  />
-                  <Ionicons
-                    name="ios-star"
-                    size={20}
-                    color={item.ratingValue > 3 ? "#f7d513" : "gray"}
-                  />
-                  <Ionicons
-                    name="ios-star"
-                    size={20}
-                    color={item.ratingValue > 4 ? "#f7d513" : "gray"}
-                  />
+                <Image
+                  source={{ uri: item.photos[0] }}
+                  style={styles.imageContainer}
+                />
+                <View style={styles.price}>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 20,
+                      paddingLeft: 10,
+                      paddingTop: 15
+                    }}
+                  >
+                    {item.price} €
+                  </Text>
                 </View>
               </View>
-              <Image
-                source={{ uri: item.user.account.photos[0] }}
-                style={{ width: 60, height: 60, borderRadius: 30 }}
-              />
-            </View>
+
+              <View style={styles.infoRoom}>
+                <View>
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      fontSize: 26,
+                      width: 320,
+                      height: 40
+                    }}
+                  >
+                    {item.title}
+                  </Text>
+                  <View style={{ flexDirection: "row" }}>
+                    <Ionicons
+                      name="ios-star"
+                      size={20}
+                      color={item.ratingValue > 0 ? "#f7d513" : "gray"}
+                    />
+                    <Ionicons
+                      name="ios-star"
+                      size={20}
+                      color={item.ratingValue > 1 ? "#f7d513" : "gray"}
+                    />
+                    <Ionicons
+                      name="ios-star"
+                      size={20}
+                      color={item.ratingValue > 2 ? "#f7d513" : "gray"}
+                    />
+                    <Ionicons
+                      name="ios-star"
+                      size={20}
+                      color={item.ratingValue > 3 ? "#f7d513" : "gray"}
+                    />
+                    <Ionicons
+                      name="ios-star"
+                      size={20}
+                      color={item.ratingValue > 4 ? "#f7d513" : "gray"}
+                    />
+                    <Text
+                      style={{ color: "gray", fontSize: 20, marginLeft: 15 }}
+                    >
+                      {item.reviews} reviews
+                    </Text>
+                  </View>
+                </View>
+                <Image
+                  source={{ uri: item.user.account.photos[0] }}
+                  style={{ width: 60, height: 60, borderRadius: 30 }}
+                />
+              </View>
+            </TouchableOpacity>
           </View>
         )}
-      />
-      <Button
-        title="Go to Profile"
-        onPress={() => {
-          navigation.navigate("Profile", { userId: 123 });
-        }}
       />
     </View>
   );
