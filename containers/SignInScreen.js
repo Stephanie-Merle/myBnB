@@ -29,6 +29,9 @@ const SignInScreen = ({ setToken }) => {
       return alert("Wrong email or password");
     }
   };
+
+  //TODO Add keyboardAvoidingView behavior="padding" to push up input field when displaying keyboard
+
   return (
     <View style={styles.container}>
       <View>
@@ -42,6 +45,7 @@ const SignInScreen = ({ setToken }) => {
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
+            autoCapitalize="none" //to avoid the first letter automatic uppercase when typing email
             placeholder="Your email"
             onChangeText={text => setInput({ ...inputState, email: text })}
           />

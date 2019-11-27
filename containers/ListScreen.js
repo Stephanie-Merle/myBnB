@@ -8,15 +8,22 @@ import { Ionicons } from "@expo/vector-icons";
 export default function ListScreen() {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
+  // TODO add activityIndicator and loading state
 
   const fetchingData = async () => {
     try {
       const res = await axios.get(
         "https://airbnb-api.now.sh/api/room?city=paris"
       );
-      setData(res.data.rooms);
+      if (res.data.rooms) {
+        //checking if response not empty
+        setData(res.data.rooms);
+      } else {
+        alert("an error occured");
+      }
     } catch (e) {
-      alert(e.message);
+      alert("an error occured");
+      console.log(e.message);
     }
   };
   useEffect(() => {

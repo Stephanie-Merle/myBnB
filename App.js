@@ -56,7 +56,7 @@ export default function App() {
                 // navigation tab on the bottom of the screen
                 screenOptions={({ route }) => {
                   return {
-                    tabBarIcon: ({ focused, color, size }) => {
+                    tabBarIcon: ({ color, size }) => {
                       let iconName;
                       if (route.name === "Settings") {
                         iconName = `ios-options`;
@@ -101,7 +101,14 @@ export default function App() {
                       <Stack.Screen
                         name="Room"
                         options={{
-                          title: "Room"
+                          title: "Room",
+                          headerStyle: {
+                            backgroundColor: "#85C5D3"
+                          },
+                          headerTitleStyle: {
+                            color: "white",
+                            fontSize: 20
+                          }
                         }}
                       >
                         {() => <RoomScreen />}
