@@ -1,8 +1,7 @@
 # React Native Project
 
+Small clone of AirBnB with React Native.
+
 ## Preview
 
-<div style="display:flex; margin:auto">
-<img src="./assets/preview_login.png" width="40%" height="40%" title="wide-screen">
-<img src="./assets/preview_list.png" width="40%" height="40%" title="wide-screen">
-</div>
+![](./assets/preview.gif)
