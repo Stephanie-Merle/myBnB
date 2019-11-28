@@ -63,10 +63,18 @@ const SignInScreen = ({ setToken }) => {
             <TouchableOpacity
               style={styles.btn}
               onPress={() => {
-                logingIn();
+                alert("Not yet available");
               }}
             >
               <Text style={styles.btnText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.btn2}
+              onPress={() => {
+                logingIn();
+              }}
+            >
+              <Text style={styles.btnText2}>Sign Up</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -117,15 +125,31 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: "white",
-    height: 65,
-    borderRadius: 40,
+    height: 55,
+    borderRadius: 27.5,
     width: 150,
-    paddingTop: 15,
     alignSelf: "center",
-    marginTop: 20
+    marginTop: 20,
+    justifyContent: "center"
   },
   btnText: {
     color: "#85C5D3",
+    textAlign: "center",
+    fontSize: 30
+  },
+  btn2: {
+    backgroundColor: "#85C5D3",
+    height: 55,
+    borderRadius: 27.5,
+    width: 150,
+    alignSelf: "center",
+    marginTop: 20,
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: "white"
+  },
+  btnText2: {
+    color: "white",
     textAlign: "center",
     fontSize: 30
   }

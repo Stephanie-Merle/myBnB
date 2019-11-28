@@ -8,6 +8,7 @@ import ListScreen from "./containers/ListScreen";
 import RoomScreen from "./containers/RoomScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SettingsScreen from "./containers/SettingsScreen";
+import MapScreen from "./containers/MapScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -60,6 +61,8 @@ export default function App() {
                       let iconName;
                       if (route.name === "Settings") {
                         iconName = `ios-options`;
+                      } else if (route.name === "Map") {
+                        iconName = `ios-map`;
                       } else {
                         iconName = `ios-home`;
                       }
@@ -116,12 +119,42 @@ export default function App() {
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
+                <Tab.Screen name="Map">
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Map"
+                        options={{
+                          title: "Map",
+                          headerStyle: {
+                            backgroundColor: "#85C5D3"
+                          },
+                          headerTitleStyle: {
+                            color: "white",
+                            fontSize: 20
+                          }
+                        }}
+                      >
+                        {() => <MapScreen setToken={setToken} />}
+                      </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
                 <Tab.Screen name="Settings">
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
                         name="Settings"
-                        options={{ title: "Settings" }}
+                        options={{
+                          title: "Settings",
+                          headerStyle: {
+                            backgroundColor: "#85C5D3"
+                          },
+                          headerTitleStyle: {
+                            color: "white",
+                            fontSize: 20
+                          }
+                        }}
                       >
                         {() => <SettingsScreen setToken={setToken} />}
                       </Stack.Screen>

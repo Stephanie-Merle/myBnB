@@ -135,7 +135,12 @@ export default function RoomScreen() {
           >
             {data.description}
           </Text>
-          <MyMap longitude={data.loc[0]} latitude={data.loc[1]} />
+          <MyMap
+            longitude={data.loc[0]}
+            latitude={data.loc[1]}
+            height={200}
+            delta={0.03}
+          />
         </View>
       )}
     </>
