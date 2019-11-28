@@ -5,7 +5,8 @@ import {
   Text,
   TextInput,
   View,
-  Dimensions
+  Dimensions,
+  KeyboardAvoidingView
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
@@ -30,41 +31,46 @@ const SignInScreen = ({ setToken }) => {
     }
   };
 
-  //TODO Add keyboardAvoidingView behavior="padding" to push up input field when displaying keyboard
-
   return (
     <View style={styles.container}>
-      <View>
+      <KeyboardAvoidingView
+        behavior="position"
+        style={{ flex: 1, alignContent: "center" }}
+        enabled
+      >
         <Ionicons
           name="md-home"
           style={styles.icon}
           size={150}
           color={"white"}
         />
-        <Text style={styles.title}>Welcome</Text>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            autoCapitalize="none" //to avoid the first letter automatic uppercase when typing email
-            placeholder="Your email"
-            onChangeText={text => setInput({ ...inputState, email: text })}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Your password"
-            secureTextEntry={true}
-            onChangeText={text => setInput({ ...inputState, password: text })}
-          />
+        <View style={{ flex: 1 }}>
+          <Text style={styles.title}>Welcome</Text>
+
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              autoCapitalize="none" //to avoid the first letter automatic uppercase when typing email
+              placeholder="Your email"
+              onChangeText={text => setInput({ ...inputState, email: text })}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Your password"
+              secureTextEntry={true}
+              onChangeText={text => setInput({ ...inputState, password: text })}
+            />
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => {
+                logingIn();
+              }}
+            >
+              <Text style={styles.btnText}>Login</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => {
-            logingIn();
-          }}
-        >
-          <Text style={styles.btnText}>Login</Text>
-        </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     </View>
   );
 };
@@ -87,7 +93,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     height: 200,
     alignContent: "center",
-    paddingTop: 55
+    paddingTop: 45
   },
   icon: {
     marginTop: Constants.statusBarHeight + 30,
@@ -115,7 +121,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     width: 150,
     paddingTop: 15,
-    marginLeft: (Dimensions.get("window").width - 150) / 2,
+    alignSelf: "center",
     marginTop: 20
   },
   btnText: {
