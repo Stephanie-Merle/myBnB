@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import ListScreen from "./containers/ListScreen";
 import RoomScreen from "./containers/RoomScreen";
 import SignInScreen from "./containers/SignInScreen";
+import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 import MapScreen from "./containers/MapScreen";
 
@@ -46,9 +47,25 @@ export default function App() {
           <Stack.Screen name="Splash" component={() => null} />
         ) : userToken === null ? (
           // No token found, user isn't signed in
-          <Stack.Screen name="SignIn" options={{ header: () => null }}>
-            {() => <SignInScreen setToken={setToken} />}
-          </Stack.Screen>
+          <>
+            <Stack.Screen name="SignIn" options={{ header: () => null }}>
+              {() => <SignInScreen setToken={setToken} />}
+            </Stack.Screen>
+            <Stack.Screen
+              name="SignUp"
+              options={{
+                headerStyle: {
+                  backgroundColor: "#85C5D3"
+                },
+                headerTitleStyle: {
+                  color: "white",
+                  fontSize: 20
+                }
+              }}
+            >
+              {() => <SignUpScreen setToken={setToken} />}
+            </Stack.Screen>
+          </>
         ) : (
           // User is signed in
           <Stack.Screen name="Tab" options={{ header: () => null }}>
