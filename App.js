@@ -11,6 +11,7 @@ import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 import MapScreen from "./containers/MapScreen";
 import ProfileScreen from "./containers/ProfileScreen";
+import UploadPicture from "./containers/UploadPicture";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -177,6 +178,21 @@ export default function App() {
                         }}
                       >
                         {() => <ProfileScreen setToken={setToken} />}
+                      </Stack.Screen>
+                      <Stack.Screen
+                        name="Camera"
+                        options={{
+                          title: "Camera",
+                          headerStyle: {
+                            backgroundColor: "#85C5D3"
+                          },
+                          headerTitleStyle: {
+                            color: "white",
+                            fontSize: 20
+                          }
+                        }}
+                      >
+                        {() => <UploadPicture setToken={setToken} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}

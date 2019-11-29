@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import axios from "axios";
 import { AsyncStorage } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 
 const ProfileScreen = () => {
   const [user, setUser] = useState();
   const [userData, setUserData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const navigation = useNavigation();
 
   const getProfile = async () => {
     const token = await AsyncStorage.getItem("token");
@@ -46,7 +48,12 @@ const ProfileScreen = () => {
               borderRadius: "100%"
             }}
           >
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => {
+                navigation.navigate("Camera");
+              }}
+            >
               <Text style={styles.description}>UPLOAD MY PICTURE</Text>
             </TouchableOpacity>
           </View>

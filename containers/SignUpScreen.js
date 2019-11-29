@@ -12,8 +12,7 @@ import axios from "axios";
 
 const SignInScreen = () => {
   const [inputState, setInput] = useState({
-    username: "username",
-    name: "",
+    username: "",
     email: "",
     password: "",
     description: "description"
@@ -23,8 +22,12 @@ const SignInScreen = () => {
     try {
       const res = await axios.post(
         "https://airbnb-api.herokuapp.com/api/user/sign_up",
-        { inputState },
-        inputState.password
+        {
+          username: inputState.name,
+          password: inputState.password,
+          email: inputState.email,
+          description: inputState.description
+        }
       );
       alert(res.data);
     } catch (e) {
@@ -49,7 +52,7 @@ const SignInScreen = () => {
               style={styles.input}
               autoCapitalize="none" //to avoid the first letter automatic uppercase when typing email
               placeholder="NAME"
-              onChangeText={text => setInput({ ...inputState, name: text })}
+              onChangeText={text => setInput({ ...inputState, username: text })}
             />
             <TextInput
               style={styles.input}
