@@ -21,7 +21,7 @@ const SignInScreen = ({ setToken }) => {
   const logingIn = async () => {
     try {
       const res = await axios.post(
-        "https://airbnb-api.now.sh/api/user/log_in",
+        "https://airbnb-api.herokuapp.com/api/user/log_in",
         inputState
       );
 

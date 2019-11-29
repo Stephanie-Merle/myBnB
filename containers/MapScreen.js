@@ -9,7 +9,7 @@ export default function MapScreen() {
 
   const fetchingData = async () => {
     try {
-      let url = "https://airbnb-api.now.sh/api/room?city=paris";
+      let url = "https://airbnb-api.herokuapp.com/api/room?city=paris";
       const res = await axios.get(url);
 
       if (res.data.rooms) {

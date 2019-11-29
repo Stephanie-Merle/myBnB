@@ -13,7 +13,7 @@ export default function ListScreen() {
   const fetchingData = async () => {
     try {
       const res = await axios.get(
-        "https://airbnb-api.now.sh/api/room?city=paris"
+        "https://airbnb-api.herokuapp.com/api/room?city=paris"
       );
       if (res.data.rooms) {
         //checking if response not empty
