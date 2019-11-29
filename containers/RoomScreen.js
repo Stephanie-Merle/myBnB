@@ -36,7 +36,24 @@ export default function RoomScreen() {
   useEffect(() => {
     fetchingData();
   }, []);
+  // to store the stars and access them in the return statement
+  const getStars = val => {
+    const myStars = [];
 
+    // conditionally render stars up to the rate
+    for (let i = 0; i < 5; i++) {
+      if (i < val) {
+        myStars.push(
+          <Ionicons key={i} name="ios-star" size={20} color="#f7d513" />
+        );
+      } else {
+        myStars.push(
+          <Ionicons key={i} name="ios-star" size={20} color="gray" />
+        );
+      }
+    }
+    return myStars;
+  };
   return (
     <>
       {isLoading ? (
@@ -90,31 +107,7 @@ export default function RoomScreen() {
                 {data.title}
               </Text>
               <View style={{ flexDirection: "row" }}>
-                <Ionicons
-                  name="ios-star"
-                  size={20}
-                  color={data.ratingValue > 0 ? "#f7d513" : "gray"}
-                />
-                <Ionicons
-                  name="ios-star"
-                  size={20}
-                  color={data.ratingValue > 1 ? "#f7d513" : "gray"}
-                />
-                <Ionicons
-                  name="ios-star"
-                  size={20}
-                  color={data.ratingValue > 2 ? "#f7d513" : "gray"}
-                />
-                <Ionicons
-                  name="ios-star"
-                  size={20}
-                  color={data.ratingValue > 3 ? "#f7d513" : "gray"}
-                />
-                <Ionicons
-                  name="ios-star"
-                  size={20}
-                  color={data.ratingValue > 4 ? "#f7d513" : "gray"}
-                />
+                {getStars(data.ratingValue)}
                 <Text style={{ color: "gray", fontSize: 20, marginLeft: 15 }}>
                   {data.reviews} reviews
                 </Text>

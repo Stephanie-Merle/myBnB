@@ -3,10 +3,14 @@ import { TouchableOpacity, View, Text } from "react-native";
 
 export default function SettingsScreen({ setToken }) {
   return (
-    <View style={{ flex: 1, justifyContent: "center" }}>
+    <View
+      style={{ flex: 1, backgroundColor: "#85C5D3", justifyContent: "center" }}
+    >
       <TouchableOpacity
         style={{
           backgroundColor: "#85C5D3",
+          borderColor: "white",
+          borderWidth: 2,
           width: 150,
           height: 55,
           alignSelf: "center",

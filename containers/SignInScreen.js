@@ -27,6 +27,7 @@ const SignInScreen = ({ setToken }) => {
 
       // AsyncStorage is equivalent to cookies with React
       await AsyncStorage.setItem("token", res.data.token);
+      await AsyncStorage.setItem("id", res.data._id);
       return setToken(res.data.token);
     } catch (e) {
       return alert("Wrong email or password");
@@ -90,7 +91,8 @@ export default SignInScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#85C5D3"
+    backgroundColor: "#85C5D3",
+    maxHeight: Dimensions.get("window").height
   },
   text: {
     textAlign: "center",
@@ -101,7 +103,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: 50,
-    height: 200,
+    minHeight: 100,
+    flex: 1,
     alignContent: "center",
     paddingTop: 45
   },
@@ -123,6 +126,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     textAlign: "center",
     width: 320,
+    flex: 1,
     marginLeft: (Dimensions.get("window").width - 320) / 2
   },
   btn: {

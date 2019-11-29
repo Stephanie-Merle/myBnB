@@ -8,15 +8,30 @@ import {
   Dimensions,
   KeyboardAvoidingView
 } from "react-native";
-import Constants from "expo-constants";
-import { AsyncStorage } from "react-native";
+import axios from "axios";
 
 const SignInScreen = () => {
   const [inputState, setInput] = useState({
+    username: "username",
     name: "",
     email: "",
-    password: ""
+    password: "",
+    description: "description"
   });
+
+  const registration = async () => {
+    try {
+      const res = await axios.post(
+        "https://airbnb-api.herokuapp.com/api/user/sign_up",
+        { inputState },
+        inputState.password
+      );
+      alert(res.data);
+    } catch (e) {
+      console.log(e.message);
+      return alert("something went wrong");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -34,7 +49,7 @@ const SignInScreen = () => {
               style={styles.input}
               autoCapitalize="none" //to avoid the first letter automatic uppercase when typing email
               placeholder="NAME"
-              onChangeText={text => setInput({ ...inputState, email: text })}
+              onChangeText={text => setInput({ ...inputState, name: text })}
             />
             <TextInput
               style={styles.input}
@@ -51,7 +66,7 @@ const SignInScreen = () => {
             <TouchableOpacity
               style={styles.btn2}
               onPress={() => {
-                alert("Not yet available");
+                registration();
               }}
             >
               <Text style={styles.btnText2}>DONE</Text>

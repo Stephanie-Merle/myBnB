@@ -10,6 +10,7 @@ import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 import MapScreen from "./containers/MapScreen";
+import ProfileScreen from "./containers/ProfileScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -80,6 +81,8 @@ export default function App() {
                         iconName = `ios-options`;
                       } else if (route.name === "Map") {
                         iconName = `ios-map`;
+                      } else if (route.name === "Profile") {
+                        iconName = `ios-contact`;
                       } else {
                         iconName = `ios-home`;
                       }
@@ -153,6 +156,27 @@ export default function App() {
                         }}
                       >
                         {() => <MapScreen setToken={setToken} />}
+                      </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
+                <Tab.Screen name="Profile">
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Profile"
+                        options={{
+                          title: "Profile",
+                          headerStyle: {
+                            backgroundColor: "#85C5D3"
+                          },
+                          headerTitleStyle: {
+                            color: "white",
+                            fontSize: 20
+                          }
+                        }}
+                      >
+                        {() => <ProfileScreen setToken={setToken} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
