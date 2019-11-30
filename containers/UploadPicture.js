@@ -6,25 +6,28 @@ import {
   Image,
   Share,
   StatusBar,
+  AsyncStorage,
   StyleSheet,
   Text,
   View
 } from "react-native";
-// import { Constants } from "expo";
+// import Constants from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
-import axios from "axios";
+import { useNavigation } from "@react-navigation/core";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function UploadPicture() {
-  // TODO get image (the picture url to set the user profile)
+export default function App() {
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [showBtn, setShowBtn] = useState(false);
+  const navigation = useNavigation();
   const share = useCallback(() => {
     Share.share({
       message: image,
-      title: "Your profile picture"
+      title: "Check out this photo",
+      url: image
     });
-    axios.post();
   }, [image]);
   const copyToClipboard = useCallback(() => {
     Clipboard.setString(image);
@@ -42,9 +45,13 @@ export default function UploadPicture() {
         }
       }
     } catch (e) {
+      // console.log({ uploadResponse });
+      // console.log({ uploadResult });
+      // console.log({ e });
       alert("Upload failed, sorry :(");
     } finally {
       setUploading(false);
+      setShowBtn(true);
     }
   });
   const takePhoto = useCallback(async () => {
@@ -79,6 +86,7 @@ export default function UploadPicture() {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="default" />
+      <Text style={styles.exampleText}>Example: Upload ImagePicker result</Text>
       <Button onPress={pickImage} title="Pick an image from camera roll" />
       <Button onPress={takePhoto} title="Take a photo" />
       {image && (
@@ -93,6 +101,17 @@ export default function UploadPicture() {
           >
             {image}
           </Text>
+          {showBtn ? (
+            <TouchableOpacity
+              title="Go back"
+              style={styles.btn}
+              onPress={() => {
+                navigation.navigate("Profile");
+              }}
+            >
+              <Text style={styles.btnText}>Back to Profile</Text>
+            </TouchableOpacity>
+          ) : null}
         </View>
       )}
       {uploading && (
@@ -105,14 +124,15 @@ export default function UploadPicture() {
 }
 async function uploadImageAsync(uri) {
   const apiUrl = "https://airbnb-api.herokuapp.com/api/user/upload_picture";
-  //   Note:
-  //   Uncomment this if you want to experiment with local server
-
-  //   if (Constants.isDevice) {
-  //     apiUrl = `https://your-ngrok-subdomain.ngrok.io/upload`;
-  //   } else {
-  //     apiUrl = `http://localhost:3000/upload`;
-  //   }
+  // Note:
+  // Uncomment this if you want to experiment with local server
+  //
+  // if (Constants.isDevice) {
+  //   apiUrl = `https://your-ngrok-subdomain.ngrok.io/upload`;
+  // } else {
+  //   apiUrl = `http://localhost:3000/upload`;
+  // }
+  const token = await AsyncStorage.getItem("token");
   const uriParts = uri.split(".");
   const fileType = uriParts[uriParts.length - 1];
   const formData = new FormData();
@@ -121,14 +141,11 @@ async function uploadImageAsync(uri) {
     name: `photo.${fileType}`,
     type: `image/${fileType}`
   });
-
-  // FIXME need to use the user token after BEARER HERE
-
   const options = {
     method: "POST",
     body: formData,
     headers: {
-      Authorization: "Bearer KbGrJosUZSNMwJaa",
+      Authorization: "Bearer " + token,
       Accept: "application/json",
       "Content-Type": "multipart/form-data"
     }
@@ -177,5 +194,19 @@ const styles = StyleSheet.create({
   maybeRenderImageText: {
     paddingHorizontal: 10,
     paddingVertical: 10
+  },
+  btn: {
+    backgroundColor: "white",
+    height: 55,
+    borderRadius: 27.5,
+    width: 170,
+    alignSelf: "center",
+    marginTop: 20,
+    justifyContent: "center"
+  },
+  btnText: {
+    color: "#85C5D3",
+    textAlign: "center",
+    fontSize: 20
   }
 });

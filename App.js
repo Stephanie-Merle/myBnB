@@ -20,6 +20,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
 
+  // AsyncStorage is equivalent to cookies with React
   const setToken = async token => {
     if (token) {
       AsyncStorage.setItem("Token", token);

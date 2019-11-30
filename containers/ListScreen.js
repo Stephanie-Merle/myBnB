@@ -57,7 +57,7 @@ export default function ListScreen() {
         renderItem={({ item }) => (
           <View>
             <TouchableOpacity
-              title="Got to room"
+              title="Go to room"
               onPress={() => {
                 navigation.navigate("Room", { userId: item._id });
               }}

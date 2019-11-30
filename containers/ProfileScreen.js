@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import axios from "axios";
 import { AsyncStorage } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 
 const ProfileScreen = () => {
-  const [user, setUser] = useState();
   const [userData, setUserData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
 
   const getProfile = async () => {
     const token = await AsyncStorage.getItem("token");
-    console.log(token);
+
     try {
       const id = await AsyncStorage.getItem("id");
-      console.log(id);
+
       let url = "https://airbnb-api.herokuapp.com/api/user/" + id;
       const res = await axios.get(url, {
         headers: {
@@ -23,40 +22,49 @@ const ProfileScreen = () => {
         }
       });
       setUserData(res.data);
+
       setIsLoading(false);
     } catch (e) {
-      console.log(e.message);
-      return alert("something went wrong");
       setIsLoading(false);
+      return alert("something went wrong");
     }
   };
   useEffect(() => {
     getProfile();
   }, []);
+
   return (
     <View style={styles.container}>
       {isLoading ? null : (
         <View style={{ flex: 1, alignItems: "center" }}>
-          <View
-            style={{
-              height: 150,
-              width: 150,
-              marginTop: 40,
-              backgroundColor: "#85C5D3",
-              borderWidth: 2,
-              borderColor: "white",
-              borderRadius: "100%"
-            }}
-          >
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => {
-                navigation.navigate("Camera");
+          {userData.account.photos[0] ? (
+            <Image
+              source={{ uri: userData.account.photos[0] }}
+              style={styles.image}
+            />
+          ) : (
+            <View
+              style={{
+                height: 150,
+                width: 150,
+                marginTop: 40,
+                backgroundColor: "#85C5D3",
+                borderWidth: 2,
+                borderColor: "white",
+                borderRadius: "100%"
               }}
             >
-              <Text style={styles.description}>UPLOAD MY PICTURE</Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => {
+                  navigation.navigate("Camera");
+                }}
+              >
+                <Text style={styles.description}>UPLOAD MY PICTURE</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
           <Text style={styles.title}>{userData.account.username}</Text>
           <Text style={styles.description}>{userData.account.description}</Text>
         </View>
@@ -93,5 +101,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1
+  },
+  image: {
+    height: 200,
+    width: 200,
+    marginTop: 40,
+    backgroundColor: "#85C5D3",
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 100
   }
 });

@@ -24,9 +24,7 @@ const SignInScreen = ({ setToken }) => {
         "https://airbnb-api.herokuapp.com/api/user/log_in",
         inputState
       );
-
-      // AsyncStorage is equivalent to cookies with React
-      await AsyncStorage.setItem("token", res.data.token);
+      // TODO setting this next line in app.js
       await AsyncStorage.setItem("id", res.data._id);
       return setToken(res.data.token);
     } catch (e) {

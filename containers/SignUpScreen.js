@@ -15,7 +15,7 @@ const SignInScreen = () => {
     username: "",
     email: "",
     password: "",
-    description: "description"
+    description: ""
   });
 
   const registration = async () => {
@@ -23,10 +23,9 @@ const SignInScreen = () => {
       const res = await axios.post(
         "https://airbnb-api.herokuapp.com/api/user/sign_up",
         {
-          username: inputState.name,
+          username: inputState.username,
           password: inputState.password,
-          email: inputState.email,
-          description: inputState.description
+          email: inputState.email
         }
       );
       alert(res.data);
