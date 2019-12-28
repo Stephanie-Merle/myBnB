@@ -1,4 +1,4 @@
-# React Native Project
+# React Native Front Project
 
 Small clone of AirBnB with React Native & EXPO handling authentication and geolocation.
 
